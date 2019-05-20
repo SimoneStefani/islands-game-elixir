@@ -7,7 +7,7 @@ defmodule IslandsEngine.IslandSet do
             l_shape: :none,
             s_shape: :none,
             square: :none
-  
+
   def start_link do
     Agent.start_link(fn -> initialized_set() end)
   end
@@ -18,20 +18,20 @@ defmodule IslandsEngine.IslandSet do
 
   defp string_body(island_set) do
     Enum.reduce(keys(), "", fn key, acc ->
-      island = Agent.get(island_set, &(Map.fetch!(&1, key)))
+      island = Agent.get(island_set, &Map.fetch!(&1, key))
       acc <> "#{key} => " <> Island.to_string(island) <> "\n"
     end)
   end
 
   defp keys do
     %IslandSet{}
-    |> Map.from_struct
-    |> Map.keys
+    |> Map.from_struct()
+    |> Map.keys()
   end
 
   defp initialized_set do
-    Enum.reduce(keys(), %IslandSet{}, fn (key, set) ->
-      {:ok, island} = Island.start_link
+    Enum.reduce(keys(), %IslandSet{}, fn key, set ->
+      {:ok, island} = Island.start_link()
       Map.put(set, key, island)
     end)
   end

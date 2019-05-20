@@ -9,18 +9,18 @@ defmodule IslandsEngine.Board do
     Agent.start_link(fn -> initialize_board() end)
   end
 
-  def get_coordinate(board, key) when is_atom key do
+  def get_coordinate(board, key) when is_atom(key) do
     Agent.get(board, fn board -> board[key] end)
   end
 
   def guess_coordinate(board, key) do
     get_coordinate(board, key)
-    |> Coordinate.guess
+    |> Coordinate.guess()
   end
 
   def coordinate_hit?(board, key) do
     get_coordinate(board, key)
-    |> Coordinate.hit?
+    |> Coordinate.hit?()
   end
 
   def set_coordinate_in_island(board, key, island) do
@@ -30,7 +30,7 @@ defmodule IslandsEngine.Board do
 
   def coordinate_island(board, key) do
     get_coordinate(board, key)
-    |> Coordinate.island
+    |> Coordinate.island()
   end
 
   def to_string(board) do
@@ -51,8 +51,8 @@ defmodule IslandsEngine.Board do
   end
 
   defp initialize_board do
-    Enum.reduce(keys(), %{}, fn (key, board) ->
-      {:ok, coord} = Coordinate.start_link
+    Enum.reduce(keys(), %{}, fn key, board ->
+      {:ok, coord} = Coordinate.start_link()
       Map.put(board, key, coord)
     end)
   end

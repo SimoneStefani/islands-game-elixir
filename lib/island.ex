@@ -6,7 +6,7 @@ defmodule IslandsEngine.Island do
     Agent.start_link(fn -> [] end)
   end
 
-  def replace_coordinates(island, new_coordinates) when is_list new_coordinates do
+  def replace_coordinates(island, new_coordinates) when is_list(new_coordinates) do
     Agent.update(island, fn _state -> new_coordinates end)
   end
 

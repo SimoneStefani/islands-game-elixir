@@ -1,6 +1,6 @@
 defmodule IslandsEngine.Coordinate do
-  defstruct in_island: :none, guessed?: false 
-  
+  defstruct in_island: :none, guessed?: false
+
   alias IslandsEngine.Coordinate
 
   def start_link() do
@@ -30,7 +30,7 @@ defmodule IslandsEngine.Coordinate do
     Agent.update(coordinate, fn state -> Map.put(state, :guessed?, true) end)
   end
 
-  def set_in_island(coordinate, value) when is_atom value do
+  def set_in_island(coordinate, value) when is_atom(value) do
     Agent.update(coordinate, fn state -> Map.put(state, :in_island, value) end)
   end
 
