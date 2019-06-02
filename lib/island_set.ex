@@ -1,5 +1,5 @@
 defmodule IslandsEngine.IslandSet do
-  alias IslandsEngine.IslandSet
+  alias IslandsEngine.{Island, IslandSet, Coordinate}
   alias IslandsEngine.Island
 
   defstruct atoll: :none,
@@ -10,6 +10,14 @@ defmodule IslandsEngine.IslandSet do
 
   def start_link do
     Agent.start_link(fn -> initialized_set() end)
+  end
+
+  def set_island_coordinates(island_set, island_key, new_coordinates) do
+    island = Agent.get(island_set, fn state -> Map.get(state, island_key) end)
+    original_coordinates = Agent.get(island, fn state -> state end)
+    Island.replace_coordinates(island, new_coordinates)
+    Coordinate.set_all_in_island(original_coordinates, :none)
+    Coordinate.set_all_in_island(new_coordinates, island_key)
   end
 
   def to_string(island_set) do
