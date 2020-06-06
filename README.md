@@ -1,6 +1,6 @@
 # IslandsEngine
 
-**TODO: Add description**
+A simple game leveraging the power of Elixir actor model constructs.
 
 ## Installation
 
